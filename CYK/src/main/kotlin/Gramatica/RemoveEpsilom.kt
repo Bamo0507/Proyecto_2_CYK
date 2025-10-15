@@ -8,7 +8,6 @@ fun removeEpsilom(
 ): List<Production> {
     // Identificar anulables
     val anulables = determineNullables(productions)
-    println("Símbolos anulables: ${anulables.joinToString(", ")}")
 
     // Arrancamos con todas las producciones menos las que estan vacias
     var result = productions
@@ -18,7 +17,6 @@ fun removeEpsilom(
     // Generar nuevas producciones
     for (production in productions) {
         val rightSide = production.right
-        println("Analizando: ${production.left} -> ${rightSide.joinToString("")}")
     
         // Lista de posiciones que son anulables
         val nullablePositions = rightSide.indices.filter { pos -> rightSide[pos] in anulables }
@@ -26,13 +24,11 @@ fun removeEpsilom(
 
         // Si no tiene anulables, no hace nada
         if (nullableCount == 0) {
-            println("No contiene anulables, se mantiene tal cual.")
             continue
         }
     
         // Cantidad de combinaciones posibles 2^n
         val totalCombinations = 1 shl nullableCount
-        println("Posiciones anulables: $nullablePositions (total combinaciones a generar: ${totalCombinations - 1})")
     
         for (combination in 1 until totalCombinations) {
             val candidateRightSide = mutableListOf<String>()
@@ -55,7 +51,6 @@ fun removeEpsilom(
                 val newProd = Production(production.left, candidateRightSide)
                 if (newProd !in result) {
                     result += newProd
-                    println("Agregada: ${newProd.left} -> ${newProd.right.joinToString("")}")
                 }
             }
         }
@@ -63,9 +58,6 @@ fun removeEpsilom(
 
     // Remover producciones repetidas
     result = result.distinct().toMutableList()
-    println("Total de producciones tras eliminación de duplicados: ${result.size}")
-    println("\nResultado final:")
-    result.forEach { println("${it.left} -> ${it.right.joinToString("")}") }
     
     return result
 }

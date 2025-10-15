@@ -22,7 +22,7 @@ private fun printParseTree(tree: ParseTree, indent: String = "") {
 
 fun main() {
     val grammarPath = "src/main/kotlin/Texts/gramatica.txt"
-    val testSentence = "She cooks with a dog"
+    val testSentence = "She eats a cake with a fork"
 
     println("Leyendo gramática de: $grammarPath")
     val file = File(grammarPath)
